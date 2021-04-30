@@ -32,7 +32,7 @@ def is_session_valid(user_uuid):
     return user_uuid in users_sessions
 
 
-# ΕΡΩΤΗΜΑ 1: Δημιουργία χρήστη  OK_100
+# ΕΡΩΤΗΜΑ 1: Δημιουργία χρήστη
 @app.route('/createUser', methods=['POST'])
 def create_user():
     # Request JSON data
@@ -74,7 +74,7 @@ def create_user():
         return Response("A user with the given username already exists", mimetype='application/json', status=400)  # ΠΡΟΣΘΗΚΗ STATUS
 
 
-# ΕΡΩΤΗΜΑ 2: Login στο σύστημα  OK_100
+# ΕΡΩΤΗΜΑ 2: Login στο σύστημα
 @app.route('/login', methods=['POST'])
 def login():
     # Request JSON data
@@ -106,13 +106,12 @@ def login():
         res = {"uuid": create_session(data['username']), "username": data['username']}
         return Response(json.dumps(res), mimetype='application/json', status=200)  # ΠΡΟΣΘΗΚΗ STATUS
 
-    # Διαφορετικά, αν η αυθεντικοποίηση είναι ανεπιτυχής.
-    else:
+    else: # Διαφορετικά, αν η αυθεντικοποίηση είναι ανεπιτυχής.
     # Μήνυμα λάθους (Λάθος username ή password)
         return Response("Wrong username or password.", mimetype='application/json',status=400)  # ΠΡΟΣΘΗΚΗ STATUS
 
 
-# ΕΡΩΤΗΜΑ 3: Επιστροφή φοιτητή βάσει email  OK_100
+# ΕΡΩΤΗΜΑ 3: Επιστροφή φοιτητή βάσει email
 @app.route('/getStudent', methods=['GET'])
 def get_student():
     # Request JSON data
@@ -150,7 +149,7 @@ def get_student():
     else:
         return Response("You haven't been authenticated",status=401 , mimetype='application/json')
 
-# ΕΡΩΤΗΜΑ 4: Επιστροφή όλων των φοιτητών που είναι 30 ετών  ΟΚ_100
+# ΕΡΩΤΗΜΑ 4: Επιστροφή όλων των φοιτητών που είναι 30 ετών
 @app.route('/getStudents/thirties', methods=['GET'])
 def get_students_thirty():
     """
@@ -183,7 +182,7 @@ def get_students_thirty():
     else:
         return Response("You haven't been authenticated",status=401 , mimetype='application/json')
 
-# ΕΡΩΤΗΜΑ 5: Επιστροφή όλων των φοιτητών που είναι τουλάχιστον 30 ετών  OK_100
+# ΕΡΩΤΗΜΑ 5: Επιστροφή όλων των φοιτητών που είναι τουλάχιστον 30 ετών
 @app.route('/getStudents/oldies', methods=['GET'])
 def get_students_oldies():
     """
@@ -218,7 +217,7 @@ def get_students_oldies():
         return Response("You haven't been authenticated",status=401 , mimetype='application/json')
 
 
-# ΕΡΩΤΗΜΑ 6: Επιστροφή φοιτητή που έχει δηλώσει κατοικία βάσει email  OK_100
+# ΕΡΩΤΗΜΑ 6: Επιστροφή φοιτητή που έχει δηλώσει κατοικία βάσει email
 @app.route('/getStudentAddress', methods=['GET'])
 def get_student_address():
     # Request JSON data
@@ -264,7 +263,7 @@ def get_student_address():
 
 
 
-# ΕΡΩΤΗΜΑ 7: Διαγραφή φοιτητή βάσει email  OK_100*
+# ΕΡΩΤΗΜΑ 7: Διαγραφή φοιτητή βάσει email
 @app.route('/deleteStudent', methods=['GET'])
 def delete_student():
     # Request JSON data
@@ -307,7 +306,7 @@ def delete_student():
         return Response("You haven't been authenticated",status=401 , mimetype='application/json')
 
 
-# ΕΡΩΤΗΜΑ 8: Εισαγωγή μαθημάτων σε φοιτητή βάσει email  OK_100
+# ΕΡΩΤΗΜΑ 8: Εισαγωγή μαθημάτων σε φοιτητή βάσει email
 @app.route('/addCourses', methods=['GET'])
 def add_courses():
     # Request JSON data
@@ -410,49 +409,6 @@ def get_courses():
             return Response("There isn't any student with email "+str(data['email'])+" or courses are not inputted yet", status=400, mimetype='application/json')
     else:
         return Response("You haven't been authenticated",status=401 , mimetype='application/json')
-
-# @app.route('/test/<int:where>')
-# def test(where):
-#     import requests
-#     def test3():
-#         return requests.post('http://127.0.0.1:5000/login', data="{\"username\": \"ant\", \"password\": \"0\" }").text[10:-21]
-#     def clear_all():
-#         global users_sessions
-#         users.drop()
-#         users_sessions = {}
-#         return Response("Cleared users and users_sessions!")
-#
-#     print("Welcome to test",where)
-#
-#     if where == 1:
-#         return Response(requests.post('http://127.0.0.1:5000/createUser', data="{\"username\": \"ant\", \"password\": \"0\" }"))
-#     elif where == 2:
-#         return Response(requests.post('http://127.0.0.1:5000/login', data="{\"username\": \"ant\", \"password\": \"0\" }"))
-#     elif where == 3:
-#         return Response(requests.get('http://127.0.0.1:5000/getStudent', data="{\"email\":\"everettrich@ontagene.com\"}",
-#                      headers=json.loads("{\"authorization\":\"" + test3() + "\"}")))
-#     elif where == 4:
-#         return Response(requests.get('http://127.0.0.1:5000/getStudents/thirties', headers=json.loads("{\"authorization\":\"" + test3() + "\"}")))
-#     elif where == 5:
-#         return Response(requests.get('http://127.0.0.1:5000/getStudents/oldies', headers=json.loads("{\"authorization\":\"" + test3() + "\"}")))
-#     elif where == 6:
-#         return Response(requests.get('http://127.0.0.1:5000/getStudentAddress', data="{\"email\":\"everettrich@ontagene.com\"}", headers=json.loads("{\"authorization\":\"" + test3() + "\"}")))
-#     elif where == 7:
-#         return Response(requests.get('http://127.0.0.1:5000/deleteStudent', data="{\"email\":\"allisonturner@ontagene.com\"}", headers=json.loads("{\"authorization\":\"" + test3() + "\"}")))
-#     elif where == 8:
-#         temp = "{ \"mathima_1\": 0, \"mathima_2\": 2, \"mathima_3\":4 }"
-#         return Response(
-#             requests.get('http://127.0.0.1:5000/addCourses', data="{\"email\":\"everettrich@ontagene.com\",\"courses\":"+temp+"}",
-#                          headers=json.loads("{\"authorization\":\"" + test3() + "\"}")))
-#     elif where == 9:
-#         return Response(
-#             requests.get('http://127.0.0.1:5000/getPassedCourses', data="{\"email\":\"everettrich@ontagene.com\"}",
-#                          headers=json.loads("{\"authorization\":\"" + test3() + "\"}")))
-#     elif where == 2873:
-#         return clear_all()
-# 
-#     return Response("Emmm ok..?")
-
 
 # Εκτέλεση flask service σε debug mode, στην port 5000.
 if __name__ == '__main__':
