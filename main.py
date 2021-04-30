@@ -140,9 +140,9 @@ def get_student():
     """
     if is_session_valid(request.headers['authorization']):
         student = students.find_one({"email":data['email']})
-        student['_id']=None
 
         if student is not None:
+            student['_id']=None
             # Η παρακάτω εντολή χρησιμοποιείται μόνο στη περίπτωση επιτυχούς αναζήτησης φοιτητών (δηλ. υπάρχει φοιτητής με αυτό το email).
             return Response(json.dumps(student), status=200, mimetype='application/json')
         else:
