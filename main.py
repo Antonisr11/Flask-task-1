@@ -264,7 +264,7 @@ def get_student_address():
 
 
 # ΕΡΩΤΗΜΑ 7: Διαγραφή φοιτητή βάσει email
-@app.route('/deleteStudent', methods=['GET'])
+@app.route('/deleteStudent', methods=['DELETE'])
 def delete_student():
     # Request JSON data
     data = None
@@ -307,7 +307,7 @@ def delete_student():
 
 
 # ΕΡΩΤΗΜΑ 8: Εισαγωγή μαθημάτων σε φοιτητή βάσει email
-@app.route('/addCourses', methods=['GET'])
+@app.route('/addCourses', methods=['PATCH'])
 def add_courses():
     # Request JSON data
     data = None
